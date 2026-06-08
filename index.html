@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,292 +7,635 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
-      colors: {
-        rt1: { DEFAULT: '#DC2626', light: '#FEF2F2', border: '#FECACA' },
-        rt2: { DEFAULT: '#EA580C', light: '#FFF7ED', border: '#FED7AA' },
-        rt3: { DEFAULT: '#CA8A04', light: '#FEFCE8', border: '#FDE68A' },
-        rom1: { DEFAULT: '#16A34A', light: '#F0FDF4', border: '#BBF7D0' },
-        rom2: { DEFAULT: '#2563EB', light: '#EFF6FF', border: '#BFDBFE' },
-      }
-    }
-  }
-}
-</script>
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Outfit','sans-serif'],mono:['JetBrains Mono','monospace']}}}}</script>
 <style>
-* { box-sizing: border-box; }
-body { font-family: 'Outfit', sans-serif; background: #F8FAFC; color: #0F172A; }
+*{box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 
-/* Hero gradient */
-.hero-bg {
-  background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 50%, #0F172A 100%);
-  position: relative;
-  overflow: hidden;
-}
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.15) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.08) 0%, transparent 50%);
-}
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+/* ── TOP NAVBAR ───────────────────────────── */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid #E2E8F0;height:60px;display:flex;align-items:center;padding:0 32px;gap:0}
+.nav-logo{font-weight:700;font-size:16px;color:#0F172A;margin-right:32px;white-space:nowrap}
+.nav-logo span{color:#2563EB}
+.nav-links{display:flex;align-items:center;gap:4px;flex:1}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:14px;font-weight:500;color:#64748B;cursor:pointer;transition:all .15s;text-decoration:none;border:none;background:none;font-family:inherit}
+.nav-link:hover{background:#F1F5F9;color:#0F172A}
+.nav-link.active{background:#0F172A;color:white}
+.nav-link.current{background:#EFF6FF;color:#2563EB}
 
-/* Nav glassmorphism */
-.glass-nav {
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
+/* Dropdown */
+.dropdown{position:relative}
+.dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid #E2E8F0;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);min-width:200px;padding:6px;display:none;z-index:200}
+.dropdown:hover .dropdown-menu,.dropdown-menu:hover{display:block}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;font-size:14px;color:#374151;cursor:pointer;transition:background .1s;font-weight:500}
+.dropdown-item:hover{background:#F1F5F9}
+.dropdown-item.active{background:#EFF6FF;color:#2563EB}
+.dropdown-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* Cards */
-.ac-card {
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #E2E8F0;
-  transition: all 0.2s ease;
-  overflow: hidden;
-}
-.ac-card:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-  transform: translateY(-2px);
-}
-.ac-card.dimmed { opacity: 0.3; filter: grayscale(0.5); }
-.ac-card.featured { ring: 2px; }
+/* Soutenance btn */
+.btn-soutenance{margin-left:auto;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;background:#0F172A;color:white;border:none;cursor:pointer;font-family:inherit;transition:background .15s;white-space:nowrap}
+.btn-soutenance:hover{background:#1E293B}
+.btn-soutenance.active{background:#DC2626}
 
-/* Level bar */
-.level-bar { height: 3px; border-radius: 2px; background: #E2E8F0; overflow: hidden; }
-.level-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+/* ── HERO (Présentation) ─────────────────── */
+.hero{background:linear-gradient(135deg,#0F172A 0%,#1E3A5F 60%,#0F172A 100%);padding:100px 0 60px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.12) 0%,transparent 70%);top:-200px;right:-100px}
 
-/* Profile pills */
-.profile-pill {
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  border: 1.5px solid #E2E8F0;
-  color: #64748B;
-  cursor: pointer;
-  transition: all 0.15s;
-  background: white;
-}
-.profile-pill:hover { border-color: #94A3B8; color: #334155; }
-.profile-pill.active { background: #0F172A; color: white; border-color: #0F172A; }
+/* ── SECTIONS ────────────────────────────── */
+.section{padding:64px 0;scroll-margin-top:60px}
+.container{max-width:1100px;margin:0 auto;padding:0 32px}
+.section-title{font-size:24px;font-weight:700;color:#0F172A;margin-bottom:6px}
+.section-sub{font-size:15px;color:#64748B;margin-bottom:32px}
 
-/* Comp tabs */
-.comp-tab {
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #64748B;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 1.5px solid transparent;
-  white-space: nowrap;
-}
-.comp-tab:hover { background: #F1F5F9; color: #334155; }
-.comp-tab.active { background: white; border-color: #E2E8F0; color: #0F172A; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+/* ── PORTFOLIO ───────────────────────────── */
+.comp-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;padding:4px;background:#F1F5F9;border-radius:12px;width:fit-content}
+.comp-tab{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:none;background:none;font-family:inherit;color:#64748B;display:flex;align-items:center;gap:6px}
+.comp-tab:hover{background:rgba(255,255,255,.7)}
+.comp-tab.active{background:white;color:#0F172A;box-shadow:0 1px 4px rgba(0,0,0,.1)}
 
-/* Stat cards */
-.stat-card {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px;
-  padding: 20px 24px;
-  backdrop-filter: blur(8px);
-}
+/* Profile filter row */
+.profile-row{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.profile-btn{padding:5px 14px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid #E2E8F0;background:white;color:#64748B;transition:all .15s;font-family:inherit}
+.profile-btn:hover{border-color:#94A3B8;color:#334155}
+.profile-btn.active{background:#0F172A;color:white;border-color:#0F172A}
 
-/* Source tags */
-.source-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 500;
-  background: #F1F5F9;
-  color: #64748B;
-  border: 1px solid #E2E8F0;
-}
+/* AC Cards */
+.ac-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.ac-card{background:white;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;transition:all .2s}
+.ac-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#CBD5E1}
+.ac-card.dimmed{opacity:.3;pointer-events:none}
+.ac-stripe{height:3px;width:100%}
+.ac-body{padding:18px}
+.ac-code{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:10px}
+.ac-title{font-size:13.5px;font-weight:600;color:#0F172A;margin-bottom:8px;line-height:1.4}
+.ac-summary{font-size:12px;color:#64748B;line-height:1.6;margin-bottom:10px}
+.level-bar{height:3px;background:#E2E8F0;border-radius:2px;margin-bottom:12px;overflow:hidden}
+.level-fill{height:100%;border-radius:2px}
+.ac-sources{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.source-tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#F1F5F9;color:#64748B;border:1px solid #E2E8F0}
+.ac-actions{display:flex;gap:8px;border-top:1px solid #F1F5F9;padding-top:12px}
+.btn-ac{flex:1;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:600;text-align:center;text-decoration:none;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:4px}
+.btn-p{background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE}
+.btn-p:hover{background:#DBEAFE}
+.btn-a{background:#F5F3FF;color:#7C3AED;border:1px solid #DDD6FE}
+.btn-a:hover{background:#EDE9FE}
 
-/* Drive buttons */
-.btn-drive {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  transition: all 0.15s;
-  text-decoration: none;
-}
-.btn-preuve { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
-.btn-preuve:hover { background: #DBEAFE; }
-.btn-analyse { background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE; }
-.btn-analyse:hover { background: #EDE9FE; }
+/* Comp section header */
+.comp-hdr{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #F1F5F9}
+.comp-strip{width:4px;height:28px;border-radius:2px;flex-shrink:0}
+.comp-hdr h3{font-size:16px;font-weight:700;color:#0F172A}
+.comp-hdr p{font-size:13px;color:#64748B;margin-top:2px}
+.badge-focus{margin-left:auto;padding:3px 12px;border-radius:999px;font-size:11px;font-weight:600}
 
-/* Section header strip */
-.comp-strip { width: 4px; height: 100%; border-radius: 2px; flex-shrink: 0; }
+/* ── CV SECTION ──────────────────────────── */
+.cv-tabs{display:flex;gap:8px;margin-bottom:32px;border-bottom:2px solid #E2E8F0;padding-bottom:0}
+.cv-tab{padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;color:#64748B;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;border:none;background:none;font-family:inherit}
+.cv-tab:hover{color:#0F172A}
+.cv-tab.active{color:#2563EB;border-bottom-color:#2563EB}
 
-/* Soutenance */
-.soutenance-slide {
-  min-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 10%;
-  border-bottom: 1px solid #E2E8F0;
-}
+.cv-panel{display:none}
+.cv-panel.active{display:block}
 
-/* Animations */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-.fade-up { animation: fadeUp 0.4s ease forwards; }
-.fade-up-1 { animation-delay: 0.1s; }
-.fade-up-2 { animation-delay: 0.2s; }
-.fade-up-3 { animation-delay: 0.3s; }
+/* CV Card Layout */
+.cv-card{background:white;border:1px solid #E2E8F0;border-radius:16px;padding:40px;max-width:800px}
+.cv-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;padding-bottom:24px;border-bottom:2px solid #F1F5F9}
+.cv-name{font-size:28px;font-weight:800;color:#0F172A;letter-spacing:-0.5px}
+.cv-title{font-size:15px;color:#2563EB;font-weight:600;margin-top:4px}
+.cv-contact{text-align:right;font-size:13px;color:#64748B;line-height:1.8}
+.cv-contact a{color:#2563EB}
+.cv-section{margin-bottom:24px}
+.cv-section-title{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#94A3B8;margin-bottom:12px}
+.cv-item{margin-bottom:16px}
+.cv-item-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.cv-item-title{font-weight:600;font-size:14px;color:#0F172A}
+.cv-item-date{font-size:12px;color:#94A3B8;white-space:nowrap;font-family:monospace}
+.cv-item-sub{font-size:13px;color:#2563EB;font-weight:500;margin:2px 0}
+.cv-item-desc{font-size:13px;color:#64748B;line-height:1.6;margin-top:4px}
+.cv-skills{display:flex;flex-wrap:wrap;gap:6px}
+.skill-tag{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:500;background:#F1F5F9;color:#334155;border:1px solid #E2E8F0}
+.skill-tag.highlight{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
+.cv-divider{border:none;border-top:1px solid #F1F5F9;margin:20px 0}
+.print-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;background:#0F172A;color:white;border:none;cursor:pointer;font-family:inherit;margin-bottom:20px;transition:background .15s}
+.print-btn:hover{background:#1E293B}
 
-/* Avatar circle */
-.avatar-ring {
-  width: 80px; height: 80px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #2563EB, #7C3AED);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; font-weight: 700; color: white;
-  border: 3px solid rgba(255,255,255,0.2);
-}
+/* ── SOUTENANCE ──────────────────────────── */
+#soutenance-view{display:none;padding-top:60px}
+.slide{padding:80px 10%;min-height:90vh;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid #E2E8F0}
+.slide-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:2px;margin-bottom:16px}
+.slide h2{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-bottom:16px;line-height:1.1}
+.slide .slide-desc{font-size:17px;color:#64748B;max-width:650px;margin-bottom:36px;line-height:1.7}
+.slide-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:900px}
+.slide-card{background:white;border:1px solid #E2E8F0;border-radius:12px;padding:18px}
+.slide-card h4{font-size:13px;font-weight:700;font-family:monospace;margin-bottom:6px}
+.slide-card p{font-size:12px;color:#64748B;line-height:1.6;margin-bottom:10px}
+.slide-btns{display:flex;gap:6px}
+.slide-btn{padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;transition:all .15s}
+.slide-btn-p{background:#EFF6FF;color:#2563EB;border:1px solid #BFDBFE}
+.slide-btn-a{background:#F5F3FF;color:#7C3AED;border:1px solid #DDD6FE}
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+/* Print */
+@media print{.topnav,.print-btn,.cv-tabs{display:none!important}.cv-panel{display:block!important}.cv-card{border:none;padding:0;box-shadow:none}}
+@media(max-width:768px){.topnav{padding:0 16px}.container{padding:0 16px}.hero{padding:80px 0 40px}.ac-grid{grid-template-columns:1fr}.slide-grid{grid-template-columns:1fr}.cv-card{padding:24px}}
+
+/* Stats in hero */
+.stat-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 22px}
+.stat-num{font-size:30px;font-weight:800;font-family:monospace;color:white}
+.stat-lbl{font-size:12px;color:#94A3B8;margin-top:2px}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero-bg relative py-20">
-  <div class="hero-grid"></div>
-  <div class="relative max-w-6xl mx-auto px-6">
-    <div class="flex flex-col md:flex-row items-start gap-8 mb-12">
-      <div class="avatar-ring flex-shrink-0">VC</div>
-      <div>
-        <div class="flex items-center gap-3 mb-3">
-          <span class="font-mono text-xs bg-green-500 text-white px-3 py-1 rounded-full">● Disponible</span>
-          <span class="font-mono text-xs text-slate-400">BUT R&T · Parcours ROM · 2025–2026</span>
-        </div>
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-2" style="letter-spacing:-1px">Victor CELARIER</h1>
-        <p class="text-lg text-slate-300 mb-4">IUT de Roanne — Réseaux & Télécommunications</p>
-        <div class="flex flex-wrap gap-2">
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">Cisco Catalyst 9000</span>
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">Wi-Fi Enterprise</span>
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">Python Automation</span>
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">ToIP / SIP</span>
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">LoRaWAN / IoT</span>
-          <span class="text-xs font-mono bg-white/10 text-slate-300 px-3 py-1 rounded-full border border-white/10">Stormshield CSNA</span>
-        </div>
+<!-- ══════════════ TOP NAVBAR ══════════════ -->
+<nav class="topnav">
+  <div class="nav-logo">VC<span>.</span></div>
+
+  <div class="nav-links">
+    <a class="nav-link current" onclick="showSection('presentation')" href="#presentation">Présentation</a>
+
+    <div class="dropdown">
+      <a class="nav-link" onclick="showSection('portfolio')" href="#portfolio">
+        Portfolio <svg style="display:inline;width:14px;height:14px;vertical-align:middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <div style="padding:6px 12px 4px;font-size:11px;font-weight:600;color:#94A3B8;letter-spacing:1px;text-transform:uppercase">Compétences</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('all')"><span class="dot" style="background:#64748B"></span>Toutes</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('RT1')"><span class="dot" style="background:#DC2626"></span>RT1 — Administrer</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('RT2')"><span class="dot" style="background:#EA580C"></span>RT2 — Connecter</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('RT3')"><span class="dot" style="background:#CA8A04"></span>RT3 — Créer</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('ROM1')"><span class="dot" style="background:#16A34A"></span>ROM1 — Infrastructures</div>
+        <div class="dropdown-item" onclick="showSection('portfolio');setComp('ROM2')"><span class="dot" style="background:#2563EB"></span>ROM2 — Communications</div>
       </div>
     </div>
 
-    <!-- Stats -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="stat-card fade-up fade-up-1">
-        <div class="text-3xl font-bold text-white font-mono mb-1">24</div>
-        <div class="text-sm text-slate-400">Apprentissages critiques</div>
+    <div class="dropdown">
+      <a class="nav-link" onclick="showSection('cv')" href="#cv">
+        CV <svg style="display:inline;width:14px;height:14px;vertical-align:middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+      </a>
+      <div class="dropdown-menu">
+        <div style="padding:6px 12px 4px;font-size:11px;font-weight:600;color:#94A3B8;letter-spacing:1px;text-transform:uppercase">Profils</div>
+        <div class="dropdown-item" onclick="showSection('cv');setCvProfile('reseau')"><span class="dot" style="background:#2563EB"></span>Systèmes Réseaux</div>
+        <div class="dropdown-item" onclick="showSection('cv');setCvProfile('toip')"><span class="dot" style="background:#7C3AED"></span>Téléphonie</div>
+        <div class="dropdown-item" onclick="showSection('cv');setCvProfile('ete')"><span class="dot" style="background:#F59E0B"></span>Job d'été</div>
+        <div class="dropdown-item" onclick="showSection('cv');setCvProfile('resto')"><span class="dot" style="background:#10B981"></span>Restauration</div>
       </div>
-      <div class="stat-card fade-up fade-up-2">
-        <div class="text-3xl font-bold text-white font-mono mb-1">5</div>
-        <div class="text-sm text-slate-400">Compétences BUT 2</div>
+    </div>
+  </div>
+
+  <button class="btn-soutenance" id="soutenance-btn" onclick="toggleSoutenance()">⊞ Soutenance</button>
+</nav>
+
+<!-- ══════════════ PRÉSENTATION ══════════════ -->
+<section id="presentation" class="scroll-mt-16">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="container" style="position:relative">
+      <div style="display:flex;align-items:flex-start;gap:24px;margin-bottom:40px">
+        <div style="width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,#2563EB,#7C3AED);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:white;border:2px solid rgba(255,255,255,.15);flex-shrink:0">VC</div>
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:12px;background:#10B981;color:white;padding:3px 10px;border-radius:999px;font-weight:600;font-family:monospace">● Alternant disponible</span>
+            <span style="font-size:12px;color:#94A3B8;font-family:monospace">BUT R&T · ROM · 2025–2026</span>
+          </div>
+          <h1 style="font-size:48px;font-weight:800;color:white;letter-spacing:-1.5px;margin:0 0 6px">Victor CELARIER</h1>
+          <p style="font-size:16px;color:#94A3B8;margin:0">IUT de Roanne — Réseaux & Télécommunications</p>
+        </div>
       </div>
-      <div class="stat-card fade-up fade-up-3">
-        <div class="text-3xl font-bold text-blue-400 font-mono mb-1">12</div>
-        <div class="text-sm text-slate-400">Semaines — Stage CHU</div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:40px">
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Cisco IOS-XE / Catalyst 9K</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Wi-Fi Enterprise</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Python Automation</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">ToIP / FreePBX / SIP</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">LoRaWAN / Node.js</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Stormshield CSNA</span>
+        <span style="font-size:12px;font-family:monospace;background:rgba(255,255,255,.08);color:#CBD5E1;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">VMware ESXi</span>
       </div>
-      <div class="stat-card fade-up" style="animation-delay:.4s">
-        <div class="text-3xl font-bold text-emerald-400 font-mono mb-1">CHU</div>
-        <div class="text-sm text-slate-400">Saint-Étienne · DSN</div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:700px">
+        <div class="stat-box"><div class="stat-num">24</div><div class="stat-lbl">ACs documentés</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:#60A5FA">5</div><div class="stat-lbl">Compétences</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:#34D399">12</div><div class="stat-lbl">Sem. stage CHU</div></div>
+        <div class="stat-box"><div class="stat-num" style="color:#A78BFA">3CX</div><div class="stat-lbl">Basic + Advanced</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- À propos -->
+  <div style="background:white;border-bottom:1px solid #E2E8F0">
+    <div class="container" style="padding-top:40px;padding-bottom:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+      <div>
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:12px">À propos</h2>
+        <p style="font-size:14px;color:#64748B;line-height:1.8">Étudiant en 2ème année de BUT Réseaux & Télécommunications parcours ROM (Réseaux Opérateurs Multimédia) à l'IUT de Roanne. Mon stage de 12 semaines au CHU de Saint-Étienne (Direction des Services Numériques, équipe Réseaux) m'a permis de participer activement au renouvellement du cœur de réseau, à la gestion d'un parc de 300+ bornes Wi-Fi, et au développement d'un script Python d'automatisation pour le parc d'onduleurs APC.</p>
+        <p style="font-size:14px;color:#64748B;line-height:1.8;margin-top:12px">À l'aise aussi bien sur des projets techniques (Cisco Catalyst, migration VSS→C9K, LoRaWAN, Node.js) que dans le travail en équipe et la rédaction de documentation professionnelle.</p>
+      </div>
+      <div>
+        <h2 style="font-size:20px;font-weight:700;margin-bottom:12px">Formation & Expériences</h2>
+        <div style="border-left:2px solid #E2E8F0;padding-left:20px;display:flex;flex-direction:column;gap:20px">
+          <div>
+            <div style="font-size:11px;font-family:monospace;color:#2563EB;font-weight:600;margin-bottom:4px">2024–2026</div>
+            <div style="font-size:14px;font-weight:600">BUT R&T — Parcours ROM</div>
+            <div style="font-size:13px;color:#2563EB">IUT de Roanne</div>
+            <div style="font-size:13px;color:#64748B;margin-top:4px">Réseaux Opérateurs Multimédia · Certifications 3CX Basic+Advanced, Stormshield CSNA</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-family:monospace;color:#10B981;font-weight:600;margin-bottom:4px">2025 — 12 semaines</div>
+            <div style="font-size:14px;font-weight:600">Stage — Technicien Réseau</div>
+            <div style="font-size:13px;color:#2563EB">CHU de Saint-Étienne · DSN équipe Réseaux</div>
+            <div style="font-size:13px;color:#64748B;margin-top:4px">Migration VSS→Catalyst 9K · Gestion Wi-Fi 300+ bornes · Automation Python · Migration VLAN 2</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ NAV STICKY ═══════════════ -->
-<nav class="glass-nav shadow-sm">
-  <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
-    <!-- Profile selector -->
-    <div class="flex items-center gap-2 flex-wrap">
-      <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Profil CV</span>
-      <button class="profile-pill active" onclick="setProfile('all')" id="p-all">Portfolio complet</button>
-      <button class="profile-pill" onclick="setProfile('network')" id="p-network">Admin. Réseau</button>
-      <button class="profile-pill" onclick="setProfile('voip')" id="p-voip">Ingénieur ToIP</button>
-      <button class="profile-pill" onclick="setProfile('dev')" id="p-dev">Dev R&T</button>
+<!-- ══════════════ PORTFOLIO ══════════════ -->
+<section id="portfolio" class="section" style="display:none">
+  <div class="container">
+    <div class="section-title">Portfolio — Apprentissages Critiques</div>
+    <div class="section-sub">24 ACs documentés avec preuves et analyses réflexives</div>
+
+    <!-- Profile filter -->
+    <div class="profile-row">
+      <span style="font-size:12px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.8px">Profil CV :</span>
+      <button class="profile-btn active" onclick="setPortfolioProfile('all')" id="pp-all">Tout montrer</button>
+      <button class="profile-btn" onclick="setPortfolioProfile('reseau')" id="pp-reseau">Systèmes Réseaux</button>
+      <button class="profile-btn" onclick="setPortfolioProfile('toip')" id="pp-toip">Téléphonie</button>
+      <button class="profile-btn" onclick="setPortfolioProfile('dev')" id="pp-dev">Dev R&T</button>
     </div>
-    <!-- Soutenance toggle -->
-    <button id="soutenance-btn" onclick="toggleSoutenance()"
-      class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-700 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4"/></svg>
-      Mode Soutenance
-    </button>
+
+    <!-- Comp tabs -->
+    <div class="comp-tabs">
+      <button class="comp-tab active" onclick="setComp('all')" id="n-all">Toutes</button>
+      <button class="comp-tab" onclick="setComp('RT1')" id="n-RT1"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#DC2626;margin-right:6px"></span>RT1</button>
+      <button class="comp-tab" onclick="setComp('RT2')" id="n-RT2"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#EA580C;margin-right:6px"></span>RT2</button>
+      <button class="comp-tab" onclick="setComp('RT3')" id="n-RT3"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#CA8A04;margin-right:6px"></span>RT3</button>
+      <button class="comp-tab" onclick="setComp('ROM1')" id="n-ROM1"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#16A34A;margin-right:6px"></span>ROM1</button>
+      <button class="comp-tab" onclick="setComp('ROM2')" id="n-ROM2"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#2563EB;margin-right:6px"></span>ROM2</button>
+    </div>
+
+    <div id="ac-container"></div>
   </div>
-</nav>
+</section>
 
-<!-- ═══════════════ MAIN CONTENT ═══════════════ -->
-<main class="max-w-6xl mx-auto px-6 py-10" id="main-content">
+<!-- ══════════════ CV ══════════════ -->
+<section id="cv" class="section" style="display:none">
+  <div class="container">
+    <div class="section-title">CV — Choisir un profil</div>
+    <div class="section-sub">Sélectionne le profil adapté selon le recruteur</div>
 
-  <!-- Comp tabs -->
-  <div class="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
-    <button class="comp-tab active" onclick="setComp('all')" id="n-all">Toutes les compétences</button>
-    <button class="comp-tab" onclick="setComp('RT1')" id="n-RT1">
-      <span class="inline-block w-2 h-2 rounded-full bg-red-600 mr-1.5"></span>RT1
-    </button>
-    <button class="comp-tab" onclick="setComp('RT2')" id="n-RT2">
-      <span class="inline-block w-2 h-2 rounded-full bg-orange-600 mr-1.5"></span>RT2
-    </button>
-    <button class="comp-tab" onclick="setComp('RT3')" id="n-RT3">
-      <span class="inline-block w-2 h-2 rounded-full bg-yellow-600 mr-1.5"></span>RT3
-    </button>
-    <button class="comp-tab" onclick="setComp('ROM1')" id="n-ROM1">
-      <span class="inline-block w-2 h-2 rounded-full bg-green-600 mr-1.5"></span>ROM1
-    </button>
-    <button class="comp-tab" onclick="setComp('ROM2')" id="n-ROM2">
-      <span class="inline-block w-2 h-2 rounded-full bg-blue-600 mr-1.5"></span>ROM2
-    </button>
+    <div class="cv-tabs">
+      <button class="cv-tab active" onclick="setCvProfile('reseau')" id="cv-tab-reseau">🖧 Systèmes Réseaux</button>
+      <button class="cv-tab" onclick="setCvProfile('toip')" id="cv-tab-toip">📞 Téléphonie</button>
+      <button class="cv-tab" onclick="setCvProfile('ete')" id="cv-tab-ete">☀️ Job d'été</button>
+      <button class="cv-tab" onclick="setCvProfile('resto')" id="cv-tab-resto">🍽️ Restauration</button>
+    </div>
+
+    <!-- ── CV RÉSEAUX ── -->
+    <div class="cv-panel active" id="cv-reseau">
+      <button class="print-btn" onclick="window.print()">🖨 Imprimer / Exporter PDF</button>
+      <div class="cv-card">
+        <div class="cv-header">
+          <div>
+            <div class="cv-name">Victor CELARIER</div>
+            <div class="cv-title">Technicien Réseaux & Infrastructure · Alternance</div>
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">
+              <span class="skill-tag highlight">Cisco IOS-XE</span>
+              <span class="skill-tag highlight">Wi-Fi Enterprise</span>
+              <span class="skill-tag highlight">Python Automation</span>
+              <span class="skill-tag highlight">Stormshield CSNA</span>
+            </div>
+          </div>
+          <div class="cv-contact">
+            <div>vicocic14@gmail.com</div>
+            <div>IUT de Roanne</div>
+            <div>BUT R&T — Parcours ROM</div>
+            <div style="margin-top:6px"><a href="https://ocictor.github.io/eportfolio" style="color:#2563EB">ocictor.github.io/eportfolio</a></div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Expérience professionnelle</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Technicien Réseau — Stage</div><div class="cv-item-sub">CHU de Saint-Étienne · Direction des Services Numériques · Équipe Réseaux</div></div>
+              <div class="cv-item-date">2025 · 12 semaines</div>
+            </div>
+            <div class="cv-item-desc">
+              • Participation à la migration du cœur réseau VSS (Cisco WS-6509-E) vers Catalyst 9000 Stackwise Virtual<br>
+              • Migration du plan d'adressage VLAN 2 (40+ switchs) sans interruption de service via adresses IP secondaires<br>
+              • Gestion quotidienne du parc Wi-Fi (300+ bornes Cisco, Cisco Prime Infrastructure, GLPI, AutoCAD)<br>
+              • Développement d'un script Python d'automatisation pour 30+ onduleurs APC (API REST, 5h → 5min)<br>
+              • Préparation du plan de migration des contrôleurs Wi-Fi C5520 SSO (document 10 étapes)
+            </div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Formation</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">BUT Réseaux & Télécommunications — Parcours ROM</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+            <div class="cv-item-desc">Réseaux Opérateurs Multimédia · SAE LoRaWAN, Node.js, ToIP multi-sites · Projet Symfony/Ansible</div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div class="cv-section">
+            <div class="cv-section-title">Compétences techniques</div>
+            <div class="cv-skills">
+              <span class="skill-tag highlight">Cisco Catalyst 9K/2960/3560</span>
+              <span class="skill-tag highlight">OSPF · VLAN · Trunking 802.1Q</span>
+              <span class="skill-tag highlight">Wi-Fi 802.11ax · CAPWAP</span>
+              <span class="skill-tag highlight">SSH · NPS/RADIUS · ACL</span>
+              <span class="skill-tag highlight">Python · API REST · Paramiko</span>
+              <span class="skill-tag highlight">VMware ESXi · Stackwise Virtual</span>
+              <span class="skill-tag">VPN IPsec · SSL · Stormshield</span>
+              <span class="skill-tag">Node.js · LoRaWAN · TTN</span>
+              <span class="skill-tag">Cisco Prime · GLPI · Ansible</span>
+            </div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-section-title">Certifications & Projets</div>
+            <div class="cv-item">
+              <div class="cv-item-title">Stormshield CSNA</div>
+              <div class="cv-item-desc">Certified Stormshield Network Administrator</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-item-title">SAE3.01 — LoRaWAN GPS</div>
+              <div class="cv-item-desc">Tracker temps réel, Node.js, Google Maps API</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-item-title">Script Automation CHU</div>
+              <div class="cv-item-desc">30+ onduleurs APC configurés via API REST Python</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CV TÉLÉPHONIE ── -->
+    <div class="cv-panel" id="cv-toip">
+      <button class="print-btn" onclick="window.print()">🖨 Imprimer / Exporter PDF</button>
+      <div class="cv-card">
+        <div class="cv-header">
+          <div>
+            <div class="cv-name">Victor CELARIER</div>
+            <div class="cv-title">Ingénieur ToIP & Communications Unifiées · Alternance</div>
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">
+              <span class="skill-tag highlight">SIP / RTP</span>
+              <span class="skill-tag highlight">FreePBX / Asterisk</span>
+              <span class="skill-tag highlight">3CX Basic + Advanced</span>
+              <span class="skill-tag highlight">QoS Voix</span>
+            </div>
+          </div>
+          <div class="cv-contact">
+            <div>vicocic14@gmail.com</div>
+            <div>IUT de Roanne</div>
+            <div>BUT R&T — Parcours ROM</div>
+            <div style="margin-top:6px"><a href="https://ocictor.github.io/eportfolio" style="color:#2563EB">ocictor.github.io/eportfolio</a></div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Expérience & Projets ToIP</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">SAE ROM.04 — Architecture ToIP multi-sites</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2025</div>
+            </div>
+            <div class="cv-item-desc">
+              • Conception et déploiement d'une architecture ToIP multi-sites complète<br>
+              • Configuration FreePBX : extensions chan_pjsip, trunks SIP inter-sites, dial plans<br>
+              • Mise en place QoS voix bout-en-bout : DSCP EF (46), LLQ Cisco MQC, VLAN dédié<br>
+              • Analyse Wireshark SIP/RTP : REGISTER, INVITE, SDP offer/answer, flux RTP
+            </div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Stage CHU Saint-Étienne — Observation infrastructure ToIP</div><div class="cv-item-sub">CHU Saint-Étienne · DSN</div></div>
+              <div class="cv-item-date">2025 · 12 sem.</div>
+            </div>
+            <div class="cv-item-desc">
+              • Observation et compréhension des politiques QoS pour VLAN voix et imagerie médicale<br>
+              • Administration Wi-Fi avec gestion des téléphones IP sans fil sur le parc hospitalier
+            </div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Formation</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">BUT Réseaux & Télécommunications — Parcours ROM</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div class="cv-section">
+            <div class="cv-section-title">Compétences ToIP</div>
+            <div class="cv-skills">
+              <span class="skill-tag highlight">SIP RFC 3261 (REGISTER/INVITE/BYE)</span>
+              <span class="skill-tag highlight">FreePBX / Asterisk</span>
+              <span class="skill-tag highlight">3CX Basic & Advanced ✓</span>
+              <span class="skill-tag highlight">Codecs G.711 / G.729</span>
+              <span class="skill-tag highlight">QoS DSCP EF · LLQ · CBWFQ</span>
+              <span class="skill-tag highlight">Wireshark SIP/RTP</span>
+              <span class="skill-tag">LoRaWAN · Node.js</span>
+              <span class="skill-tag">Cisco IOS-XE · VLAN voix</span>
+            </div>
+          </div>
+          <div class="cv-section">
+            <div class="cv-section-title">Certifications</div>
+            <div class="cv-item">
+              <div class="cv-item-title">3CX Basic Certified ✓</div>
+              <div class="cv-item-desc">Administration 3CX, extensions, messagerie</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-item-title">3CX Advanced Certified ✓</div>
+              <div class="cv-item-desc">Multi-sites, intégrations, supervision</div>
+            </div>
+            <div class="cv-item">
+              <div class="cv-item-title">Stormshield CSNA ✓</div>
+              <div class="cv-item-desc">VPN IPsec/SSL, sécurité réseau</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CV JOB D'ÉTÉ ── -->
+    <div class="cv-panel" id="cv-ete">
+      <button class="print-btn" onclick="window.print()">🖨 Imprimer / Exporter PDF</button>
+      <div class="cv-card">
+        <div class="cv-header">
+          <div>
+            <div class="cv-name">Victor CELARIER</div>
+            <div class="cv-title">Étudiant en informatique/réseaux · Disponible pour emploi saisonnier</div>
+          </div>
+          <div class="cv-contact">
+            <div>vicocic14@gmail.com</div>
+            <div>Roanne (42) · Mobile</div>
+            <div style="margin-top:4px;font-size:12px;color:#10B981;font-weight:600">Disponible dès [à préciser]</div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Présentation</div>
+          <p style="font-size:14px;color:#374151;line-height:1.7">Étudiant sérieux et motivé en 2ème année de BUT Réseaux & Télécommunications. À la recherche d'un emploi saisonnier pour contribuer à votre équipe. Habitué à travailler sous pression dans des environnements professionnels exigeants (stage dans un CHU), rapide à apprendre et à s'adapter.</p>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Expérience</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Stage technicien — CHU Saint-Étienne</div></div>
+              <div class="cv-item-date">2025 · 12 semaines</div>
+            </div>
+            <div class="cv-item-desc">Travail en équipe dans un environnement hospitalier. Respect des procédures, rigueur, sens des responsabilités. Autonomie progressive sur des tâches techniques.</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Projets académiques en groupe</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+            <div class="cv-item-desc">Collaboration en binôme et en groupe, gestion des délais, respect des cahiers des charges, livrables rendus dans les temps.</div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Formation</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">BUT Réseaux & Télécommunications</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Baccalauréat</div></div>
+              <div class="cv-item-date">2024</div>
+            </div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Qualités</div>
+          <div class="cv-skills">
+            <span class="skill-tag highlight">Ponctualité</span>
+            <span class="skill-tag highlight">Rigueur</span>
+            <span class="skill-tag highlight">Esprit d'équipe</span>
+            <span class="skill-tag highlight">Adaptabilité</span>
+            <span class="skill-tag">Autonomie</span>
+            <span class="skill-tag">Sens du service</span>
+            <span class="skill-tag">Résistance au stress</span>
+            <span class="skill-tag">Permis B</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px 16px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;font-size:13px;color:#166534">
+          <strong>Disponibilité :</strong> à préciser — Contactez-moi à vicocic14@gmail.com
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CV RESTAURATION ── -->
+    <div class="cv-panel" id="cv-resto">
+      <button class="print-btn" onclick="window.print()">🖨 Imprimer / Exporter PDF</button>
+      <div class="cv-card">
+        <div class="cv-header">
+          <div>
+            <div class="cv-name">Victor CELARIER</div>
+            <div class="cv-title">Étudiant · Candidature en restauration / service</div>
+          </div>
+          <div class="cv-contact">
+            <div>vicocic14@gmail.com</div>
+            <div>Roanne (42) · Mobile</div>
+            <div style="margin-top:4px;font-size:12px;color:#10B981;font-weight:600">Disponible dès [à préciser]</div>
+          </div>
+        </div>
+
+        <div class="cv-section">
+          <div class="cv-section-title">Présentation</div>
+          <p style="font-size:14px;color:#374151;line-height:1.7">Étudiant dynamique et motivé, je recherche un emploi en restauration ou service. Mon expérience en milieu professionnel (stage dans un CHU) m'a appris la rigueur, le respect des procédures et le travail en équipe dans des environnements avec de fortes contraintes. Souriant, à l'écoute, et prêt à m'investir pleinement.</p>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Expériences</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Stage professionnel — CHU Saint-Étienne</div></div>
+              <div class="cv-item-date">2025 · 12 semaines</div>
+            </div>
+            <div class="cv-item-desc">Intégration dans une équipe de 5 personnes. Respect strict des procédures, gestion des priorités, communication avec différents services. Environnement de travail exigeant.</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">Travail en équipe — Projets IUT</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+            <div class="cv-item-desc">Travail régulier en binôme et groupe avec respect des délais et des engagements pris.</div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Formation</div>
+          <div class="cv-item">
+            <div class="cv-item-header">
+              <div><div class="cv-item-title">BUT Réseaux & Télécommunications</div><div class="cv-item-sub">IUT de Roanne</div></div>
+              <div class="cv-item-date">2024–2026</div>
+            </div>
+          </div>
+        </div>
+        <hr class="cv-divider">
+
+        <div class="cv-section">
+          <div class="cv-section-title">Qualités personnelles</div>
+          <div class="cv-skills">
+            <span class="skill-tag highlight">Sens du contact</span>
+            <span class="skill-tag highlight">Souriant et avenant</span>
+            <span class="skill-tag highlight">Ponctualité</span>
+            <span class="skill-tag highlight">Travail en équipe</span>
+            <span class="skill-tag">Résistance physique</span>
+            <span class="skill-tag">Adaptabilité</span>
+            <span class="skill-tag">Sérieux</span>
+            <span class="skill-tag">Permis B</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px 16px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;font-size:13px;color:#92400E">
+          <strong>Disponibilité & horaires :</strong> à préciser — n'hésitez pas à me contacter : vicocic14@gmail.com
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div id="ac-container"></div>
-</main>
-
-<!-- ═══════════════ SOUTENANCE ═══════════════ -->
-<div id="soutenance-view" style="display:none">
-  <div class="soutenance-slide" style="background:linear-gradient(135deg,#0F172A,#1E3A5F)">
-    <div class="max-w-4xl">
-      <div class="font-mono text-blue-400 text-sm mb-6 tracking-widest">01 — INTRODUCTION</div>
-      <h2 class="text-5xl font-bold text-white mb-4" style="letter-spacing:-1.5px">Victor CELARIER</h2>
-      <p class="text-xl text-slate-300 mb-8 leading-relaxed">BUT Réseaux & Télécommunications · Parcours ROM<br>IUT de Roanne · Promotion 2025–2026</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div class="bg-white/10 rounded-xl p-5 border border-white/10">
-          <div class="font-semibold text-white mb-2">🏥 Stage — CHU Saint-Étienne</div>
-          <div class="text-sm text-slate-300">Direction des Services Numériques · Équipe Réseaux · 12 semaines · Migration VSS→C9K, Wi-Fi 300+ bornes, Python automation</div>
-        </div>
-        <div class="bg-white/10 rounded-xl p-5 border border-white/10">
-          <div class="font-semibold text-white mb-2">📡 SAE réalisées</div>
-          <div class="text-sm text-slate-300">SAE3.01 LoRaWAN GPS · SAE3.02 Node.js · SAE ROM.04 ToIP · Stormshield CSNA</div>
-        </div>
+<!-- ══════════════ SOUTENANCE ══════════════ -->
+<div id="soutenance-view">
+  <div class="slide" style="background:linear-gradient(135deg,#0F172A,#1E3A5F)">
+    <div style="max-width:800px">
+      <div class="slide-num" style="color:#60A5FA">01 — INTRODUCTION</div>
+      <h2 style="color:white">Victor CELARIER</h2>
+      <p class="slide-desc">BUT R&T · Parcours ROM · IUT de Roanne · 2025–2026<br>Stage de 12 semaines — CHU de Saint-Étienne · DSN Équipe Réseaux</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="font-size:12px;background:rgba(255,255,255,.1);color:#CBD5E1;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Migration VSS → Catalyst 9K</span>
+        <span style="font-size:12px;background:rgba(255,255,255,.1);color:#CBD5E1;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Wi-Fi 300+ bornes</span>
+        <span style="font-size:12px;background:rgba(255,255,255,.1);color:#CBD5E1;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">Python Automation</span>
+        <span style="font-size:12px;background:rgba(255,255,255,.1);color:#CBD5E1;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">ToIP / FreePBX / 3CX</span>
+        <span style="font-size:12px;background:rgba(255,255,255,.1);color:#CBD5E1;padding:5px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1)">LoRaWAN / Node.js</span>
       </div>
     </div>
   </div>
@@ -300,196 +643,210 @@ body { font-family: 'Outfit', sans-serif; background: #F8FAFC; color: #0F172A; }
 </div>
 
 <script>
-const COMPS = {
-  RT1: { label:'RT1 — Administrer les réseaux et l\'Internet', color:'#DC2626', bg:'#FEF2F2', border:'#FECACA', desc:'Administrer des équipements réseau, déployer des services avancés et travailler en équipe.' },
-  RT2: { label:'RT2 — Connecter les entreprises et les usagers', color:'#EA580C', bg:'#FFF7ED', border:'#FED7AA', desc:'Déployer des systèmes de transmission, mettre en place des accès sécurisés et connexions multi-sites.' },
-  RT3: { label:'RT3 — Créer des outils et applications informatiques', color:'#CA8A04', bg:'#FEFCE8', border:'#FDE68A', desc:'Développer des scripts d\'automatisation, des applications web et des outils client/serveur pour les R&T.' },
-  ROM1: { label:'ROM1 — Gérer les infrastructures des réseaux opérateurs', color:'#16A34A', bg:'#F0FDF4', border:'#BBF7D0', desc:'Administrer les réseaux d\'accès fixes et mobiles, virtualiser des services, automatiser la gestion.' },
-  ROM2: { label:'ROM2 — Gérer les communications unifiées', color:'#2563EB', bg:'#EFF6FF', border:'#BFDBFE', desc:'Choisir et déployer des services ToIP, administrer la téléphonie d\'entreprise, configurer la QoS.' },
+// ─── DATA ─────────────────────────────────
+const COMPS={
+  RT1:{c:'#DC2626',bg:'#FEF2F2',br:'#FECACA',label:'RT1 — Administrer les réseaux et l\'Internet',desc:'Administrer des équipements réseau, déployer des services avancés, travailler en équipe.'},
+  RT2:{c:'#EA580C',bg:'#FFF7ED',br:'#FED7AA',label:'RT2 — Connecter les entreprises et les usagers',desc:'Déployer des systèmes de transmission, accès sécurisés, connexions multi-sites.'},
+  RT3:{c:'#CA8A04',bg:'#FEFCE8',br:'#FDE68A',label:'RT3 — Créer des outils et applications informatiques',desc:'Automatisation, développement web, programmation client/serveur.'},
+  ROM1:{c:'#16A34A',bg:'#F0FDF4',br:'#BBF7D0',label:'ROM1 — Gérer les infrastructures des réseaux opérateurs',desc:'Réseaux d\'accès fixes et mobiles, virtualisation, automatisation.'},
+  ROM2:{c:'#2563EB',bg:'#EFF6FF',br:'#BFDBFE',label:'ROM2 — Gérer les communications unifiées',desc:'ToIP, téléphonie d\'entreprise, QoS applications temps réel.'},
 };
-
-const PROFILES = { all:null, network:['RT1','RT2','ROM1'], voip:['RT2','ROM1','ROM2'], dev:['RT3','RT1'] };
-
-const ACS = [
-  {id:'AC21.01',comp:'RT1',level:3,title:'Configurer et dépanner le routage dynamique',summary:'OSPF multi-zones (R301) + migration du plan d\'adressage VLAN 2 au CHU sans coupure de service via la technique des adresses IP secondaires Cisco.',sources:['R301','Stage CHU'],preuve:'1RGLosCw84dsMwDy_hOgF5s2f2xQf85cv',analyse:'1kDP0y18IgZ7LBcgepO4KxolOtc52b-ws'},
-  {id:'AC21.02',comp:'RT1',level:3,title:'Configurer une politique de QoS et les fonctions de sécurité',summary:'SSH v2 + authentification NPS/RADIUS sur tous les Catalyst 9200 déployés. ACL de management. Analyse SIP/RTP Wireshark et impact QoS sur VoIP en R204.',sources:['R204','R301','Stormshield','Stage CHU'],preuve:'1w8EXxNrBcYALx2sAa_Nt7NMTD-xioBBJ',analyse:'1esp-0kt6r_c02J9M8D_6qvEc_aHS2JjN'},
-  {id:'AC21.03',comp:'RT1',level:2,title:'Déployer des postes clients et des solutions virtualisées',summary:'VMware ESXi/vCenter (R202) — clusters Dell, VMotion. FreePBX sous VirtualBox (R204). Environnement Node.js+Arduino pour la SAE3.02 LoRaWAN.',sources:['R202','R204','SAE3.02'],preuve:'1RMh8Q2Deqh6m4S3PVSrQ6SogsoDKmm6o',analyse:'1BI_6nyMK71GrguniEe-MxHnDVkM8ktKl'},
-  {id:'AC21.04',comp:'RT1',level:3,title:'Déployer des services réseaux avancés',summary:'Catalyst 9200 : IOS-XE, Smart Licensing, NPS, STP. Stackwise Virtual. Plan de migration des contrôleurs Wi-Fi C5520 en 10 étapes avec gestion du mode Maintenance.',sources:['Stage CHU'],preuve:'179LuciYxhp3Fi_50mz3KDT-5xPWXeHkH',analyse:'19FCCI1K_VxM_B7TTlZrwFs2_ViNMfZ5j'},
-  {id:'AC21.05',comp:'RT1',level:2,title:'Identifier les réseaux opérateurs et l\'architecture d\'Internet',summary:'OFDM, CDMA, DSSS, modulations numériques (cours transmission). Architecture GHT Loire. Contraintes PoE 802.3af vs 802.3at pour le déploiement des bornes Wi-Fi.',sources:['R305','Stage CHU'],preuve:'1Lfg_uZ9HG3Rfg00JyX46tT0gV2YAp3ys',analyse:'19tSkV9-of7OpyZpc3dmlVmSd4h_d94Rk'},
-  {id:'AC21.06',comp:'RT1',level:3,title:'Travailler en équipe pour développer ses compétences',summary:'Équipe réseau CHU (4 membres). Document de migration Wi-Fi rédigé pour l\'équipe. Binôme Ewan DUBOIS sur SAE3.01 — répartition claire des responsabilités.',sources:['SAE3.01','Stage CHU'],preuve:'1jRm__Gl2k-Mpj3rkcoIT-fq70eyjUvsl',analyse:'1obdjgMWDZrZbsUU8DHSnxhJDT3_kN6ZQ'},
-  {id:'AC22.01',comp:'RT2',level:3,title:'Déployer et caractériser des systèmes de transmission complexes',summary:'Parc Wi-Fi CHU 300+ bornes : 802.11n/ac/ax, contraintes PoE+, gestion Cisco Prime. Tri de 60+ alertes lors d\'un incident Bellevue. OFDM et 802.11ax en cours.',sources:['R305','Stage CHU'],preuve:'1a6fAKFuNg0kvIG85myk3hiIqZivC2E2_',analyse:'1ancKvb_3B9tjGBvwYqQZUhQ_Nmun12F6'},
-  {id:'AC22.02',comp:'RT2',level:3,title:'Mettre en place un accès distant sécurisé',summary:'SSH v2 + NPS sur tous les switchs CHU. VPN IPsec site-à-site et SSL/ZTNA en cours Stormshield CSNA. Incident ACL en production : maîtrise de l\'ordre des opérations.',sources:['Stormshield CSNA','Stage CHU'],preuve:'1ime527nrx8ZEvZ8CBIILnJTwmhQWlisy',analyse:'1utC5WIY2ho94aFEpzlvo8BDRH0Y8-Rwr'},
-  {id:'AC22.03',comp:'RT2',level:2,title:'Mettre en place une connexion multi-site',summary:'Trunks SIP inter-sites FreePBX (R204 TD3 — JTANBROUILLE/BIDOUILLERT). VPN IPsec Stormshield (LAB 8). Architecture multi-sites GHT Loire, conflit d\'adressage inter-établissements.',sources:['R204','Stormshield','Stage CHU'],preuve:'1kaK1nQiMsowSmbj12Z7CwZ6slhTgUBAm',analyse:'1Jr2x5Se8BW_xXjqwO3kwtaNwAqZguVFy'},
-  {id:'AC22.04',comp:'RT2',level:3,title:'Administrer les réseaux d\'accès des opérateurs',summary:'Administration quotidienne Wi-Fi CHU (Prime, GLPI, AutoCAD). Préparation migration C5520 SSO (BulkSync, ports MG/RP). Administration FreePBX + dépannage SIP 401/403.',sources:['R204','Stage CHU'],preuve:'1GGLc3XSxV8R2U5xrqxik0m2UvXWBG9jJ',analyse:'1wwDK3i3fzi1gqoUEdAsaNH8NX6cyLb25'},
-  {id:'AC22.05',comp:'RT2',level:2,title:'Questionner un cahier des charges R&T',summary:'Calcul duty cycle LoRaWAN : time-on-air 46ms, SF7, 8 bytes = 0,001% < 1% réglementaire. Choix codec ToIP (G.711 vs G.729) selon débit disponible en SAE ROM.04.',sources:['SAE3.01','SAE ROM.04'],preuve:'1BLU_1SFHX1DyrMXMoPEf3tL2Lno9Q_dz',analyse:'1Ezlod1e0tJA2KgL6UCJk1yFSV_G_sv8i'},
-  {id:'AC23.01',comp:'RT3',level:3,title:'Automatiser l\'administration système avec des scripts',summary:'Script Python CHU : 30+ onduleurs APC configurés via API REST, détection firmware v1/v2, idempotence, rapport CSV. 5h de travail manuel → 5 minutes d\'exécution.',sources:['Stage CHU','SAE adressage'],preuve:'1fXtQ1Nnxy7naJ0AjwvTPAgQU2TouG2i0',analyse:'1DdZDcCtJFMXnLcvempIiv7HLYqc8IsrI'},
-  {id:'AC23.02',comp:'RT3',level:3,title:'Développer une application web à partir d\'un cahier des charges',summary:'SAE3.02 : backend Node.js/Express (webhooks TTN, décodage payload GPS 8 bytes big-endian) + frontend Google Maps temps réel. Ngrok pour exposition. Tests terrain.',sources:['SAE3.02'],preuve:'1atV-PagHl2L65kUYyvY2asc-oQF_LQ_3',analyse:'1ZgJHrqyX2BZsKlxtSlHxsaWTBJtPRzZs'},
-  {id:'AC23.03',comp:'RT3',level:2,title:'Programmer une application client/serveur avec un protocole réseau',summary:'HTTP (webhooks TTN, API APC). SSH programmatique via Paramiko Python. Analyse Wireshark SIP/RTP en R204 : REGISTER, INVITE, SDP, flux RTP, démonstration espionnage.',sources:['SAE3.02','R204','Stage CHU'],preuve:'1nOISFIvSY0CB0xn7IEuKRkYPfRTPkwGY',analyse:'1mDMcM2gT_GBB_KkuSRdgCEmmc8mJzaNr'},
-  {id:'AC23.04',comp:'RT3',level:2,title:'Installer et administrer un système de gestion de données',summary:'R207 : modèle E/A, SQL DDL/DML, jointures. SAE3.02 : choix Map JS (stockage mémoire) vs SQLite justifié. IPAM mutualisé GHT au CHU de Saint-Étienne.',sources:['R207','SAE3.02','Stage CHU'],preuve:'1H8ZMAV0OFkxO1CYTBMSp67sSedX75hpO',analyse:'1cYxCh_fqdT_KZbnTc9iOFCATzNWTuLCG'},
-  {id:'AC23.05',comp:'RT3',level:2,title:'Accéder à des données depuis une application web',summary:'API TTN (webhooks), Google Maps JS API (restrictions domaine/IP), API REST APC (Basic Auth), API FreePBX. Webhooks vs polling. Sécurité des clés API.',sources:['SAE3.02','Stage CHU','R204'],preuve:'1r6Z8d3JOQ1KIidg-s607MRCOBeoPk8XC',analyse:'13drPmirtpvUogNhi5_ud0wA5EUzz9HSk'},
-  {id:'AC24.01',comp:'ROM1',level:4,title:'Administrer les réseaux d\'accès fixes et mobiles',summary:'Compétence cœur du stage CHU : migration VSS→C9K, déploiement Catalyst 9200, gestion quotidienne 300+ bornes Wi-Fi (Prime, GLPI, AutoCAD), migration VLAN 2, bascule switchs.',sources:['Stage CHU'],preuve:'1I-wbDpxyWIxnCfIXyxGW2jrLiBEWHtyQ',analyse:'1k1fFgtEe3oNjmNMWyAuE_4hP-QH6NkKt'},
-  {id:'AC24.02',comp:'ROM1',level:3,title:'Virtualiser des services réseaux',summary:'VSS (WS-6509-E) → Stackwise Virtual (C9K). SSO Wi-Fi C5520 : show redundancy summary, BulkSync Complete. Mode Maintenance documenté. VMware ESXi/VMotion (R202).',sources:['Stage CHU','R202'],preuve:'1Vf-LVUkZe_hrZa6lYbgleOScr3PyWsBe',analyse:'1LNlTq42VIN0ER2_UZcO64EP96uD1OQUG'},
-  {id:'AC24.03',comp:'ROM1',level:2,title:'Comprendre l\'architecture et les offres des opérateurs',summary:'Technologies d\'accès (DSL, FTTH, 4G/5G) en cours transmission. Architecture GHT Loire, liens inter-sites. VPN IPsec/SSL Stormshield pour connexions sécurisées opérateurs.',sources:['R305','Stormshield','Stage CHU'],preuve:'1PrAwfsjLsneFBMJ0TjTDn3_ZkvtzOseq',analyse:'1r6h23el2rhl6-NDy3IhuhBIriY9Rioeh'},
-  {id:'AC24.04',comp:'ROM1',level:4,title:'Gérer le routage, la commutation et les interconnexions',summary:'Migration VLAN 2 (technique adresses secondaires Cisco, ordre strict). Trunks 802.1Q, port-channels LACP. OSPF R301. Règle critique : supprimer primary = supprimer les secondary.',sources:['R301','Stage CHU'],preuve:'1U7D7-qyLfyuz5COf-Jo7pZS8um5ntiaZ',analyse:'1NlxepC5K4GQjay3QvKtDMcVt7yi19StV'},
-  {id:'AC24.05',comp:'ROM1',level:3,title:'Automatiser la gestion des équipements réseaux',summary:'Script Python APC (30+ onduleurs, 5h → 5min, détection firmware, idempotence). Scripts de vérification chevauchement sous-réseaux. Ansible exploré pour la suite.',sources:['Stage CHU','SAE adressage'],preuve:'1Z4os-13ZqBy97hUINLBq97nsV4aLQbpU',analyse:'1POQI3K1QwqWBXb-W8KXtqDPH9ObZhQWN'},
-  {id:'AC25.01',comp:'ROM2',level:3,title:'Choisir une architecture et déployer des services de ToIP',summary:'R204 TD1→TD3 : FreePBX, SIP REGISTER/INVITE/RTP Wireshark, espionnage téléphonique (SRTP enjeu). SAE ROM.04 : architecture multi-sites, trunks SIP, VLAN voix, QoS LLQ.',sources:['R204','SAE ROM.04'],preuve:'115yWgr7tnBtBxYfFPi6Q33PThP0Au_gJ',analyse:'1guGUwPtfe_wCyNJ8fNzHw_WqBo__qDzk'},
-  {id:'AC25.02',comp:'ROM2',level:3,title:'Administrer un service de téléphonie pour l\'entreprise',summary:'Administration FreePBX : extensions chan_pjsip, messagerie vocale, dial plan, logs Asterisk (401/403/404/486). Certifications 3CX Basic et Advanced. Dépannage mismatch codecs.',sources:['R204','Certif. 3CX'],preuve:'1PBQiNqzRyzOjNi7MhK4Z2GXvzshomy6q',analyse:'1M__xmEcpcV4msKbOALtpZeIpyjq8y5Cx'},
-  {id:'AC25.03',comp:'ROM2',level:3,title:'Mettre en place une politique de QoS pour les applications temps réel',summary:'Cisco MQC : class-map DSCP EF, policy-map priority 30%, service-policy trunk. Piège mls qos trust dscp sur les trunks. SAE ROM.04, R301, CHU (VLAN voix + imagerie médicale).',sources:['R204','SAE ROM.04','Stage CHU'],preuve:'1MZHtMnifAdkW1HhHaWikXQdhJYeBzS0G',analyse:'11wHMknNtiaRDb9W4a9L0lcm8vYWrGHng'},
+const PROFILES={all:null,reseau:['RT1','RT2','ROM1'],toip:['RT2','ROM1','ROM2'],dev:['RT3','RT1']};
+const ACS=[
+  {id:'AC21.01',comp:'RT1',level:3,title:'Configurer et dépanner le routage dynamique',summary:'OSPF multi-zones (R301) + migration plan d\'adressage VLAN 2 au CHU sans coupure via adresses IP secondaires Cisco.',sources:['R301','Stage CHU'],p:'1RGLosCw84dsMwDy_hOgF5s2f2xQf85cv',a:'1kDP0y18IgZ7LBcgepO4KxolOtc52b-ws'},
+  {id:'AC21.02',comp:'RT1',level:3,title:'Configurer une politique de QoS et la sécurité réseau',summary:'SSH v2 + NPS/RADIUS sur Catalyst 9200. ACL de management. Analyse SIP/RTP Wireshark, impact QoS sur VoIP en R204.',sources:['R204','R301','Stormshield','Stage CHU'],p:'1w8EXxNrBcYALx2sAa_Nt7NMTD-xioBBJ',a:'1esp-0kt6r_c02J9M8D_6qvEc_aHS2JjN'},
+  {id:'AC21.03',comp:'RT1',level:2,title:'Déployer des postes clients et des solutions virtualisées',summary:'VMware ESXi/vCenter (R202). FreePBX/VirtualBox (R204). Environnement Node.js+Arduino SAE3.02 LoRaWAN.',sources:['R202','R204','SAE3.02'],p:'1RMh8Q2Deqh6m4S3PVSrQ6SogsoDKmm6o',a:'1BI_6nyMK71GrguniEe-MxHnDVkM8ktKl'},
+  {id:'AC21.04',comp:'RT1',level:3,title:'Déployer des services réseaux avancés',summary:'Catalyst 9200 : IOS-XE, Smart Licensing, NPS, STP. Stackwise Virtual. Plan de migration C5520 en 10 étapes avec gestion du mode Maintenance.',sources:['Stage CHU'],p:'179LuciYxhp3Fi_50mz3KDT-5xPWXeHkH',a:'19FCCI1K_VxM_B7TTlZrwFs2_ViNMfZ5j'},
+  {id:'AC21.05',comp:'RT1',level:2,title:'Identifier les réseaux opérateurs et l\'architecture d\'Internet',summary:'OFDM, CDMA, modulations (cours transmission). Architecture GHT Loire. Contraintes PoE 802.3af/at pour bornes Wi-Fi.',sources:['R305','Stage CHU'],p:'1Lfg_uZ9HG3Rfg00JyX46tT0gV2YAp3ys',a:'19tSkV9-of7OpyZpc3dmlVmSd4h_d94Rk'},
+  {id:'AC21.06',comp:'RT1',level:3,title:'Travailler en équipe pour développer ses compétences',summary:'Équipe réseau CHU (4 membres). Document de migration Wi-Fi rédigé pour l\'équipe. Binôme Ewan DUBOIS SAE3.01.',sources:['SAE3.01','Stage CHU'],p:'1jRm__Gl2k-Mpj3rkcoIT-fq70eyjUvsl',a:'1obdjgMWDZrZbsUU8DHSnxhJDT3_kN6ZQ'},
+  {id:'AC22.01',comp:'RT2',level:3,title:'Déployer et caractériser des systèmes de transmission complexes',summary:'Parc Wi-Fi CHU 300+ bornes : 802.11n/ac/ax, PoE+, Cisco Prime. 60+ alertes triées lors d\'un incident Bellevue.',sources:['R305','Stage CHU'],p:'1a6fAKFuNg0kvIG85myk3hiIqZivC2E2_',a:'1ancKvb_3B9tjGBvwYqQZUhQ_Nmun12F6'},
+  {id:'AC22.02',comp:'RT2',level:3,title:'Mettre en place un accès distant sécurisé',summary:'SSH v2 + NPS sur tous les switchs CHU. VPN IPsec site-à-site et SSL/ZTNA Stormshield CSNA. Incident ACL en production.',sources:['Stormshield CSNA','Stage CHU'],p:'1ime527nrx8ZEvZ8CBIILnJTwmhQWlisy',a:'1utC5WIY2ho94aFEpzlvo8BDRH0Y8-Rwr'},
+  {id:'AC22.03',comp:'RT2',level:2,title:'Mettre en place une connexion multi-site',summary:'Trunks SIP inter-sites FreePBX (R204 TD3). VPN IPsec Stormshield (LAB 8). Architecture multi-sites GHT Loire.',sources:['R204','Stormshield','Stage CHU'],p:'1kaK1nQiMsowSmbj12Z7CwZ6slhTgUBAm',a:'1Jr2x5Se8BW_xXjqwO3kwtaNwAqZguVFy'},
+  {id:'AC22.04',comp:'RT2',level:3,title:'Administrer les réseaux d\'accès des opérateurs',summary:'Administration Wi-Fi CHU (Prime, GLPI, AutoCAD). Migration C5520 SSO. Administration FreePBX + dépannage SIP.',sources:['R204','Stage CHU'],p:'1GGLc3XSxV8R2U5xrqxik0m2UvXWBG9jJ',a:'1wwDK3i3fzi1gqoUEdAsaNH8NX6cyLb25'},
+  {id:'AC22.05',comp:'RT2',level:2,title:'Questionner un cahier des charges R&T',summary:'Calcul duty cycle LoRaWAN : 46ms, SF7, 8 bytes = 0,001% < 1% réglementaire. Choix codec ToIP (G.711 vs G.729).',sources:['SAE3.01','SAE ROM.04'],p:'1BLU_1SFHX1DyrMXMoPEf3tL2Lno9Q_dz',a:'1Ezlod1e0tJA2KgL6UCJk1yFSV_G_sv8i'},
+  {id:'AC23.01',comp:'RT3',level:3,title:'Automatiser l\'administration système avec des scripts',summary:'Script Python CHU : 30+ onduleurs APC via API REST, détection firmware v1/v2, idempotence, rapport CSV. 5h → 5min.',sources:['Stage CHU','SAE adressage'],p:'1fXtQ1Nnxy7naJ0AjwvTPAgQU2TouG2i0',a:'1DdZDcCtJFMXnLcvempIiv7HLYqc8IsrI'},
+  {id:'AC23.02',comp:'RT3',level:3,title:'Développer une application web à partir d\'un cahier des charges',summary:'SAE3.02 : backend Node.js/Express (webhooks TTN, décodage payload GPS 8 bytes) + frontend Google Maps temps réel.',sources:['SAE3.02'],p:'1atV-PagHl2L65kUYyvY2asc-oQF_LQ_3',a:'1ZgJHrqyX2BZsKlxtSlHxsaWTBJtPRzZs'},
+  {id:'AC23.03',comp:'RT3',level:2,title:'Programmer une application client/serveur avec un protocole réseau',summary:'HTTP (webhooks TTN, API APC). SSH programmatique Paramiko Python. Analyse Wireshark SIP/RTP R204.',sources:['SAE3.02','R204','Stage CHU'],p:'1nOISFIvSY0CB0xn7IEuKRkYPfRTPkwGY',a:'1mDMcM2gT_GBB_KkuSRdgCEmmc8mJzaNr'},
+  {id:'AC23.04',comp:'RT3',level:2,title:'Installer et administrer un système de gestion de données',summary:'R207 : modèle E/A, SQL DDL/DML. SAE3.02 : Map JS vs SQLite justifié. IPAM mutualisé GHT au CHU.',sources:['R207','SAE3.02','Stage CHU'],p:'1H8ZMAV0OFkxO1CYTBMSp67sSedX75hpO',a:'1cYxCh_fqdT_KZbnTc9iOFCATzNWTuLCG'},
+  {id:'AC23.05',comp:'RT3',level:2,title:'Accéder à des données depuis une application web',summary:'API TTN (webhooks), Google Maps JS API, API REST APC (Basic Auth). Webhooks vs polling. Sécurité clés API.',sources:['SAE3.02','Stage CHU','R204'],p:'1r6Z8d3JOQ1KIidg-s607MRCOBeoPk8XC',a:'13drPmirtpvUogNhi5_ud0wA5EUzz9HSk'},
+  {id:'AC24.01',comp:'ROM1',level:4,title:'Administrer les réseaux d\'accès fixes et mobiles',summary:'Cœur du stage CHU : migration VSS→C9K, Catalyst 9200, 300+ bornes Wi-Fi, VLAN 2, bascule switchs d\'extrémité.',sources:['Stage CHU'],p:'1I-wbDpxyWIxnCfIXyxGW2jrLiBEWHtyQ',a:'1k1fFgtEe3oNjmNMWyAuE_4hP-QH6NkKt'},
+  {id:'AC24.02',comp:'ROM1',level:3,title:'Virtualiser des services réseaux',summary:'VSS (WS-6509-E) → Stackwise Virtual (C9K). SSO Wi-Fi C5520 (BulkSync, mode Maintenance). VMware ESXi/VMotion.',sources:['Stage CHU','R202'],p:'1Vf-LVUkZe_hrZa6lYbgleOScr3PyWsBe',a:'1LNlTq42VIN0ER2_UZcO64EP96uD1OQUG'},
+  {id:'AC24.03',comp:'ROM1',level:2,title:'Comprendre l\'architecture et les offres des opérateurs',summary:'Technologies d\'accès (DSL, FTTH, 4G/5G). Architecture GHT Loire. VPN IPsec/SSL Stormshield pour connexions sécurisées.',sources:['R305','Stormshield','Stage CHU'],p:'1PrAwfsjLsneFBMJ0TjTDn3_ZkvtzOseq',a:'1r6h23el2rhl6-NDy3IhuhBIriY9Rioeh'},
+  {id:'AC24.04',comp:'ROM1',level:4,title:'Gérer le routage, la commutation et les interconnexions',summary:'Migration VLAN 2 (adresses secondaires Cisco, ordre strict). Trunks 802.1Q, port-channels LACP. OSPF R301.',sources:['R301','Stage CHU'],p:'1U7D7-qyLfyuz5COf-Jo7pZS8um5ntiaZ',a:'1NlxepC5K4GQjay3QvKtDMcVt7yi19StV'},
+  {id:'AC24.05',comp:'ROM1',level:3,title:'Automatiser la gestion des équipements réseaux',summary:'Script Python APC (30+ onduleurs, 5h→5min). Scripts vérification sous-réseaux. Ansible exploré.',sources:['Stage CHU','SAE adressage'],p:'1Z4os-13ZqBy97hUINLBq97nsV4aLQbpU',a:'1POQI3K1QwqWBXb-W8KXtqDPH9ObZhQWN'},
+  {id:'AC25.01',comp:'ROM2',level:3,title:'Choisir une architecture et déployer des services de ToIP',summary:'R204 : FreePBX, SIP, Wireshark, espionnage RTP. SAE ROM.04 : multi-sites, trunks SIP, VLAN voix, QoS LLQ.',sources:['R204','SAE ROM.04'],p:'115yWgr7tnBtBxYfFPi6Q33PThP0Au_gJ',a:'1guGUwPtfe_wCyNJ8fNzHw_WqBo__qDzk'},
+  {id:'AC25.02',comp:'ROM2',level:3,title:'Administrer un service de téléphonie pour l\'entreprise',summary:'FreePBX : chan_pjsip, messagerie, dial plan, logs Asterisk (401/403/404). Certif. 3CX Basic + Advanced.',sources:['R204','Certif. 3CX'],p:'1PBQiNqzRyzOjNi7MhK4Z2GXvzshomy6q',a:'1M__xmEcpcV4msKbOALtpZeIpyjq8y5Cx'},
+  {id:'AC25.03',comp:'ROM2',level:3,title:'Mettre en place une politique de QoS pour les applications temps réel',summary:'Cisco MQC : class-map DSCP EF, policy-map priority 30%. Piège mls qos trust dscp sur les trunks.',sources:['R204','SAE ROM.04','Stage CHU'],p:'1MZHtMnifAdkW1HhHaWikXQdhJYeBzS0G',a:'11wHMknNtiaRDb9W4a9L0lcm8vYWrGHng'},
 ];
 
-let currentComp = 'all';
-let currentProfile = 'all';
-let soutenanceActive = false;
+// ─── STATE ────────────────────────────────
+let currentSection='presentation';
+let currentComp='all';
+let portfolioProfile='all';
+let currentCvProfile='reseau';
+let soutActive=false;
 
-function driveUrl(id){ return `https://drive.google.com/file/d/${id}/view`; }
+// ─── NAV ─────────────────────────────────
+function showSection(s){
+  ['presentation','portfolio','cv'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=(id===s)?'':'none';
+  });
+  document.getElementById('soutenance-view').style.display='none';
+  soutActive=false;
+  document.getElementById('soutenance-btn').textContent='⊞ Soutenance';
+  document.getElementById('soutenance-btn').classList.remove('active');
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('current'));
+  currentSection=s;
+  if(s==='portfolio') renderPortfolio();
+}
 
-function levelBar(level, color){
-  const labels = ['','Découverte','Approfondissement','Maîtrise','Expert'];
-  const pct = (level/4)*100;
-  return `
-    <div class="flex items-center gap-2 mt-1">
-      <div class="level-bar flex-1">
-        <div class="level-fill" style="width:${pct}%;background:${color}"></div>
-      </div>
-      <span class="text-xs font-mono font-medium" style="color:${color}">${level}/4</span>
-      <span class="text-xs text-slate-400">${labels[level]}</span>
-    </div>`;
+// ─── PORTFOLIO ────────────────────────────
+function driveUrl(id){return`https://drive.google.com/file/d/${id}/view`;}
+
+function levelBar(lvl,color){
+  return`<div class="level-bar"><div class="level-fill" style="width:${lvl*25}%;background:${color}"></div></div>`;
 }
 
 function renderCard(ac){
-  const comp = COMPS[ac.comp];
-  const focus = PROFILES[currentProfile];
-  const dimmed = focus && !focus.includes(ac.comp) ? 'dimmed' : '';
-  const featured = focus && focus.includes(ac.comp) ? 'ring-2' : '';
-
-  return `<div class="ac-card ${dimmed}" style="${focus && focus.includes(ac.comp) ? `ring-color:${comp.color};ring:2px solid ${comp.color}33` : ''}">
-    <div style="height:3px;background:${comp.color}"></div>
-    <div class="p-5">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-md" style="background:${comp.bg};color:${comp.color};border:1px solid ${comp.border}">${ac.id}</span>
-        ${focus && focus.includes(ac.comp) ? `<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-200 flex-shrink-0">★ Cœur du profil</span>` : ''}
+  const comp=COMPS[ac.comp];
+  const focus=PROFILES[portfolioProfile];
+  const dim=focus&&!focus.includes(ac.comp)?'dimmed':'';
+  const isFocus=focus&&focus.includes(ac.comp);
+  return`<div class="ac-card ${dim}">
+    <div class="ac-stripe" style="background:${comp.c}"></div>
+    <div class="ac-body">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <span class="ac-code" style="background:${comp.bg};color:${comp.c};border:1px solid ${comp.br}">${ac.id}</span>
+        ${isFocus?`<span style="font-size:10px;font-weight:700;color:${comp.c};background:${comp.bg};padding:2px 8px;border-radius:999px;border:1px solid ${comp.br}">★ Profil</span>`:''}
       </div>
-      <h3 class="font-semibold text-sm leading-snug mb-2 text-slate-800">${ac.title}</h3>
-      <p class="text-xs text-slate-500 leading-relaxed mb-3">${ac.summary}</p>
-      ${levelBar(ac.level, comp.color)}
-      <div class="flex flex-wrap gap-1.5 my-3">
-        ${ac.sources.map(s=>`<span class="source-tag">${s}</span>`).join('')}
+      <div class="ac-title">${ac.title}</div>
+      <div class="ac-summary">${ac.summary}</div>
+      ${levelBar(ac.level,comp.c)}
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:10px">
+        ${[1,2,3,4].map(i=>`<div style="width:8px;height:8px;border-radius:2px;background:${i<=ac.level?comp.c:'#E2E8F0'}"></div>`).join('')}
+        <span style="font-size:11px;color:${comp.c};font-weight:600;margin-left:4px;font-family:monospace">${ac.level}/4</span>
       </div>
-      <div class="flex gap-2 pt-1 border-t border-slate-100">
-        <a class="btn-drive btn-preuve flex-1 justify-center" href="${driveUrl(ac.preuve)}" target="_blank">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          Preuve
-        </a>
-        <a class="btn-drive btn-analyse flex-1 justify-center" href="${driveUrl(ac.analyse)}" target="_blank">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          Analyse
-        </a>
+      <div class="ac-sources">${ac.sources.map(s=>`<span class="source-tag">${s}</span>`).join('')}</div>
+      <div class="ac-actions">
+        <a class="btn-ac btn-p" href="${driveUrl(ac.p)}" target="_blank">↗ Preuve</a>
+        <a class="btn-ac btn-a" href="${driveUrl(ac.a)}" target="_blank">↗ Analyse</a>
       </div>
     </div>
   </div>`;
 }
 
-function renderAll(){
-  const container = document.getElementById('ac-container');
-  if(currentComp === 'all'){
-    let html = '';
-    ['RT1','RT2','RT3','ROM1','ROM2'].forEach(cid => {
-      const comp = COMPS[cid];
-      const acs = ACS.filter(a => a.comp === cid);
-      const focus = PROFILES[currentProfile];
-      const isHighlighted = !focus || focus.includes(cid);
-      html += `<div class="mb-10" style="${!isHighlighted ? 'opacity:0.4' : ''}">
-        <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-100">
-          <span class="w-1 h-6 rounded-full flex-shrink-0" style="background:${comp.color}"></span>
-          <div>
-            <h2 class="font-bold text-slate-900">${comp.label}</h2>
-            <p class="text-sm text-slate-500">${comp.desc}</p>
-          </div>
-          ${isHighlighted && focus ? `<span class="ml-auto text-xs font-semibold px-3 py-1 rounded-full" style="background:${comp.bg};color:${comp.color};border:1px solid ${comp.border}">★ Profil cible</span>` : ''}
+function renderPortfolio(){
+  const container=document.getElementById('ac-container');
+  if(!container) return;
+  const focus=PROFILES[portfolioProfile];
+  if(currentComp==='all'){
+    let html='';
+    ['RT1','RT2','RT3','ROM1','ROM2'].forEach(cid=>{
+      const comp=COMPS[cid];
+      const acs=ACS.filter(a=>a.comp===cid);
+      const dim=focus&&!focus.includes(cid);
+      html+=`<div style="${dim?'opacity:.35':''}margin-bottom:36px">
+        <div class="comp-hdr">
+          <div class="comp-strip" style="background:${comp.c}"></div>
+          <div><h3>${comp.label}</h3><p>${comp.desc}</p></div>
+          ${!dim&&focus?`<span class="badge-focus" style="background:${comp.bg};color:${comp.c};border:1px solid ${comp.br}">★ Profil cible</span>`:''}
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">${acs.map(renderCard).join('')}</div>
+        <div class="ac-grid">${acs.map(renderCard).join('')}</div>
       </div>`;
     });
-    container.innerHTML = html;
+    container.innerHTML=html;
   } else {
-    const comp = COMPS[currentComp];
-    const acs = ACS.filter(a => a.comp === currentComp);
-    let html = `<div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-      <span class="w-1.5 h-8 rounded-full" style="background:${comp.color}"></span>
-      <div>
-        <h2 class="text-xl font-bold text-slate-900">${comp.label}</h2>
-        <p class="text-sm text-slate-500 mt-0.5">${comp.desc}</p>
-      </div>
+    const comp=COMPS[currentComp];
+    const acs=ACS.filter(a=>a.comp===currentComp);
+    container.innerHTML=`<div class="comp-hdr" style="margin-bottom:20px">
+      <div class="comp-strip" style="background:${comp.c}"></div>
+      <div><h3 style="font-size:18px">${comp.label}</h3><p>${comp.desc}</p></div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">${acs.map(renderCard).join('')}</div>`;
-    container.innerHTML = html;
+    <div class="ac-grid">${acs.map(renderCard).join('')}</div>`;
   }
 }
 
+function setComp(id){
+  currentComp=id;
+  document.querySelectorAll('.comp-tab').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('n-'+id);
+  if(el) el.classList.add('active');
+  renderPortfolio();
+}
+
+function setPortfolioProfile(id){
+  portfolioProfile=id;
+  document.querySelectorAll('.profile-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('pp-'+id);
+  if(el) el.classList.add('active');
+  renderPortfolio();
+}
+
+// ─── CV ──────────────────────────────────
+function setCvProfile(id){
+  currentCvProfile=id;
+  document.querySelectorAll('.cv-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.cv-panel').forEach(p=>p.classList.remove('active'));
+  const tab=document.getElementById('cv-tab-'+id);
+  const panel=document.getElementById('cv-'+id);
+  if(tab) tab.classList.add('active');
+  if(panel) panel.classList.add('active');
+  showSection('cv');
+}
+
+// ─── SOUTENANCE ──────────────────────────
 function renderSoutenance(){
-  const comp_ids = PROFILES[currentProfile] || Object.keys(COMPS);
-  let html = '';
-  let num = 2;
-  comp_ids.forEach(cid => {
-    const comp = COMPS[cid];
-    const acs = ACS.filter(a => a.comp === cid);
-    html += `<div class="soutenance-slide" style="background:white;border-left:6px solid ${comp.color}">
-      <div class="max-w-5xl">
-        <div class="font-mono text-sm mb-4 font-semibold" style="color:${comp.color}">${String(num++).padStart(2,'0')} — ${cid}</div>
-        <h2 class="text-4xl font-bold text-slate-900 mb-2" style="letter-spacing:-1px">${comp.label.split(' — ')[1]}</h2>
-        <p class="text-slate-500 mb-8">${comp.desc}</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          ${acs.map(ac => `<div class="rounded-xl p-5 border" style="background:${comp.bg};border-color:${comp.border}">
-            <div class="font-mono text-xs font-bold mb-2" style="color:${comp.color}">${ac.id}</div>
-            <div class="font-semibold text-slate-800 text-sm mb-2">${ac.title}</div>
-            <div class="text-xs text-slate-500 mb-3 leading-relaxed">${ac.summary}</div>
-            <div class="flex gap-2">
-              <a href="${driveUrl(ac.preuve)}" target="_blank" class="btn-drive btn-preuve text-xs">↗ Preuve</a>
-              <a href="${driveUrl(ac.analyse)}" target="_blank" class="btn-drive btn-analyse text-xs">↗ Analyse</a>
+  const focus=PROFILES[portfolioProfile]||Object.keys(COMPS);
+  const ids=Array.isArray(focus)?focus:Object.keys(COMPS);
+  let html=''; let n=2;
+  ids.forEach(cid=>{
+    const comp=COMPS[cid];
+    const acs=ACS.filter(a=>a.comp===cid);
+    html+=`<div class="slide" style="border-left:5px solid ${comp.c}">
+      <div style="max-width:900px">
+        <div class="slide-num" style="color:${comp.c}">${String(n++).padStart(2,'0')} — ${cid}</div>
+        <h2 style="color:#0F172A">${comp.label.split(' — ')[1]}</h2>
+        <p class="slide-desc">${comp.desc}</p>
+        <div class="slide-grid">
+          ${acs.map(ac=>`<div class="slide-card" style="border-left:3px solid ${comp.c}">
+            <h4 style="color:${comp.c}">${ac.id} · ${ac.title}</h4>
+            <p>${ac.summary}</p>
+            <div class="slide-btns">
+              <a class="slide-btn slide-btn-p" href="${driveUrl(ac.p)}" target="_blank">↗ Preuve</a>
+              <a class="slide-btn slide-btn-a" href="${driveUrl(ac.a)}" target="_blank">↗ Analyse</a>
             </div>
           </div>`).join('')}
         </div>
       </div>
     </div>`;
   });
-  document.getElementById('soutenance-slides').innerHTML = html;
-}
-
-function setComp(id){
-  currentComp = id;
-  document.querySelectorAll('.comp-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('n-'+id).classList.add('active');
-  renderAll();
-}
-
-function setProfile(id){
-  currentProfile = id;
-  document.querySelectorAll('.profile-pill').forEach(b=>b.classList.remove('active'));
-  document.getElementById('p-'+id).classList.add('active');
-  renderAll();
-  if(soutenanceActive) renderSoutenance();
+  document.getElementById('soutenance-slides').innerHTML=html;
 }
 
 function toggleSoutenance(){
-  soutenanceActive = !soutenanceActive;
-  const btn = document.getElementById('soutenance-btn');
-  const main = document.getElementById('main-content');
-  const sout = document.getElementById('soutenance-view');
-  if(soutenanceActive){
-    btn.textContent = '✕ Mode Normal';
-    btn.style.background = '#DC2626';
-    main.style.display = 'none';
-    sout.style.display = 'block';
+  soutActive=!soutActive;
+  const btn=document.getElementById('soutenance-btn');
+  ['presentation','portfolio','cv'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  const sv=document.getElementById('soutenance-view');
+  if(soutActive){
+    sv.style.display='block';
+    btn.textContent='✕ Fermer';
+    btn.classList.add('active');
     renderSoutenance();
   } else {
-    btn.innerHTML = '<svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4"/></svg> Mode Soutenance';
-    btn.style.background = '#0F172A';
-    main.style.display = 'block';
-    sout.style.display = 'none';
+    sv.style.display='none';
+    btn.textContent='⊞ Soutenance';
+    btn.classList.remove('active');
+    showSection(currentSection||'presentation');
   }
 }
 
-renderAll();
+// ─── INIT ────────────────────────────────
+showSection('presentation');
 </script>
 </body>
 </html>
