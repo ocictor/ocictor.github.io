@@ -25,7 +25,8 @@ body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 /* Dropdown */
 .dropdown{position:relative}
 .dropdown-menu{position:absolute;top:calc(100% + 8px);left:0;background:white;border:1px solid #E2E8F0;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);min-width:200px;padding:6px;display:none;z-index:200}
-.dropdown:hover .dropdown-menu,.dropdown-menu:hover{display:block}
+.dropdown-menu.active{display:block !important}
+@media(min-width:769px){.dropdown:hover .dropdown-menu,.dropdown-menu:hover{display:block}}
 .dropdown-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;font-size:14px;color:#374151;cursor:pointer;transition:background .1s;font-weight:500}
 .dropdown-item:hover{background:#F1F5F9}
 .dropdown-item.active{background:#EFF6FF;color:#2563EB}
@@ -135,7 +136,85 @@ body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 
 /* Print */
 @media print{.topnav,.print-btn,.cv-tabs{display:none!important}.cv-panel{display:block!important}.cv-card{border:none;padding:0;box-shadow:none}}
-@media(max-width:768px){.topnav{padding:0 16px}.container{padding:0 16px}.hero{padding:80px 0 40px}.ac-grid{grid-template-columns:1fr}.slide-grid{grid-template-columns:1fr}.cv-card{padding:24px}}
+
+/* ── MOBILE NAV ─────────────── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;margin-left:auto;background:none;border:none}
+.nav-hamburger span{display:block;width:22px;height:2px;background:#475569;border-radius:2px;transition:all .2s}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nav-mobile-overlay{display:none;position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(0,0,0,.3);z-index:90}
+.nav-mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:white;z-index:95;border-bottom:1px solid #E2E8F0;padding:12px 0;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.nav-mobile-menu a,.nav-mobile-menu div[onclick]{display:block;padding:12px 20px;font-size:15px;font-weight:500;color:#374151;cursor:pointer;border:none;background:none;text-align:left;font-family:inherit;width:100%;text-decoration:none}
+.nav-mobile-menu a:hover,.nav-mobile-menu div[onclick]:hover{background:#F8FAFC}
+.nav-mobile-section{padding:6px 20px;font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:1px;margin-top:8px}
+.nav-mobile-menu .nav-mobile-sub{padding:10px 32px;font-size:14px;color:#64748B}
+.nav-mobile-menu .nav-mobile-sub:hover{background:#F8FAFC;color:#374151}
+
+@media(max-width:768px){
+  .topnav{padding:0 16px}
+  .nav-links{display:none}
+  .btn-soutenance{display:none}
+  .nav-hamburger{display:flex}
+
+  .container{padding:0 16px}
+
+  /* Hero */
+  .hero{padding:75px 0 32px}
+  .hero h1{font-size:32px !important}
+  .hero .stat-num{font-size:22px !important}
+
+  /* Grilles */
+  .ac-grid{grid-template-columns:1fr}
+  .slide-grid{grid-template-columns:1fr}
+
+  /* CV */
+  .cv-card{padding:20px}
+  .cv-header{flex-direction:column !important;gap:16px !important}
+  .cv-header > div:first-child{flex-direction:column !important}
+  .cv-header img{width:80px !important;height:107px !important}
+  .cv-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;white-space:nowrap}
+  .cv-tab{flex-shrink:0;padding:8px 14px;font-size:13px}
+  .cv-skills{gap:5px}
+  .cv-section-title{margin-top:8px}
+  div[style*="grid-template-columns:1fr 1fr"]{display:block !important}
+  div[style*="grid-template-columns:1fr 1fr"] > div{margin-bottom:16px}
+
+  /* Portfolio */
+  .comp-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;width:100%;max-width:100%;border-radius:8px}
+  .comp-tab{flex-shrink:0;font-size:12px;padding:6px 12px}
+  .profile-row{gap:6px}
+  .profile-btn{font-size:12px;padding:4px 10px}
+  .comp-hdr{flex-wrap:wrap}
+  .comp-hdr h3{font-size:14px}
+
+  /* Outils & Technologies */
+  div[style*="grid-template-columns:1fr 1fr;gap:32px"]{display:block !important}
+  div[style*="grid-template-columns:1fr 1fr;gap:32px"] > div:first-child{margin-bottom:24px}
+
+  /* Parcours */
+  .hero-glow{display:none}
+  div[style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr) !important}
+
+  /* Stats hero */
+  div[style*="grid-template-columns:repeat(4,1fr);gap:16px"]{grid-template-columns:repeat(2,1fr) !important;gap:10px !important}
+
+  /* Section title */
+  .section-title{font-size:19px}
+
+  /* Slide */
+  .slide{padding:80px 6%;min-height:auto}
+  .slide h2{font-size:28px}
+}
+
+.two-col-grid{display:grid !important;grid-template-columns:1fr 1fr !important}
+@media(max-width:600px){.two-col-grid{display:block !important}.two-col-grid > div:first-child{margin-bottom:24px}}
+@media(max-width:480px){
+  .hero h1{font-size:26px !important}
+  .ac-card .ac-title{font-size:13px}
+  .cv-name{font-size:21px !important}
+}
+
 
 /* Stats in hero */
 .stat-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 22px}
@@ -148,6 +227,11 @@ body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 <!-- ══════════════ TOP NAVBAR ══════════════ -->
 <nav class="topnav">
   <div class="nav-logo">VC<span>.</span></div>
+
+  <!-- Hamburger mobile -->
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 
   <div class="nav-links">
     <a class="nav-link current" onclick="showSection('presentation')" href="#presentation">Présentation</a>
@@ -183,6 +267,27 @@ body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 
   <button class="btn-soutenance" id="soutenance-btn" onclick="toggleSoutenance()">Soutenance</button>
 </nav>
+
+<!-- Menu mobile overlay -->
+<div class="nav-mobile-overlay" id="mob-overlay" onclick="closeMobileMenu()"></div>
+<div class="nav-mobile-menu" id="mob-menu">
+  <div class="nav-mobile-section">Navigation</div>
+  <a onclick="showSection('presentation');closeMobileMenu()">Présentation</a>
+  <div class="nav-mobile-section">Portfolio</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('all');closeMobileMenu()">Toutes les compétences</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('RT1');closeMobileMenu()">RT1 — Administrer</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('RT2');closeMobileMenu()">RT2 — Connecter</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('RT3');closeMobileMenu()">RT3 — Créer</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('ROM1');closeMobileMenu()">ROM1 — Infrastructures</div>
+  <div class="nav-mobile-sub" onclick="showSection('portfolio');setComp('ROM2');closeMobileMenu()">ROM2 — Communications</div>
+  <div class="nav-mobile-section">CV</div>
+  <div class="nav-mobile-sub" onclick="setCvProfile('reseau');closeMobileMenu()">Systèmes Réseaux</div>
+  <div class="nav-mobile-sub" onclick="setCvProfile('toip');closeMobileMenu()">Téléphonie</div>
+  <div class="nav-mobile-sub" onclick="setCvProfile('ete');closeMobileMenu()">Job d'été</div>
+  <div class="nav-mobile-sub" onclick="setCvProfile('resto');closeMobileMenu()">Restauration</div>
+  <div class="nav-mobile-section" style="margin-top:8px;margin-bottom:4px"></div>
+  <a onclick="toggleSoutenance();closeMobileMenu()">Mode Soutenance</a>
+</div>
 
 <!-- ══════════════ PRÉSENTATION ══════════════ -->
 <section id="presentation" class="scroll-mt-16">
@@ -264,7 +369,7 @@ body{font-family:'Outfit',sans-serif;background:#F8FAFC;color:#0F172A;margin:0}
 <div style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0">
   <div class="container" style="padding-top:40px;padding-bottom:40px">
     <h2 style="font-size:20px;font-weight:700;margin-bottom:24px">Outils & Technologies</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px" class="two-col-grid">
       <div>
         <div style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#2563EB;margin-bottom:16px">Réseaux & Infrastructure</div>
         <div style="display:flex;flex-direction:column;gap:14px">
@@ -996,6 +1101,22 @@ function toggleSoutenance(){
     btn.classList.remove('active');
     showSection(currentSection||'presentation');
   }
+}
+
+// ─── MOBILE MENU ──────────────────────────
+function toggleMobileMenu(){
+  const m=document.getElementById('mob-menu');
+  const o=document.getElementById('mob-overlay');
+  const h=document.getElementById('hamburger');
+  const open=m.style.display==='block';
+  m.style.display=open?'none':'block';
+  o.style.display=open?'none':'block';
+  h.classList.toggle('open',!open);
+}
+function closeMobileMenu(){
+  document.getElementById('mob-menu').style.display='none';
+  document.getElementById('mob-overlay').style.display='none';
+  document.getElementById('hamburger').classList.remove('open');
 }
 
 // ─── INIT ────────────────────────────────
